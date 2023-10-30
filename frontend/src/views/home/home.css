@@ -1,0 +1,8 @@
+#usercard .image {
+  position: relative;
+}
+#usercard .logoutbutton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
