@@ -43,6 +43,22 @@ app.post('/auth', async (req, res) => {
 	});
 });
 
+app.post('/check', async (req, res) => {
+	const { auth } = req.body;
+
+	const profile = await spotiGet('https://api.spotify.com/v1/me', null, auth.access_token);
+	if (profile?.id) return res.send({status: true});
+
+	spotiPost('https://accounts.spotify.com/api/token', {
+        grant_type: 'refresh_token',
+        refresh_token: auth.refresh_token
+	}).then(result => {
+		res.send(result);
+	}).catch(err => {
+		res.send(err);
+	});
+});
+
 app.get('/profile', async (req, res) => {
 	console.log('GET /profile');
 	const access_token = req.query.access_token as string;
