@@ -9,6 +9,7 @@ export interface IShareState {
 export interface ILoader {
 	total: number;
 	offset: number;
+	loaded?: boolean;
 	list: any[]
 }
 
@@ -32,12 +33,18 @@ export interface IPlaylist {
 const shareSlice = createSlice({
 	name: 'counter',
 	initialState: {
-
+		songs: JSON.parse(localStorage.getItem("loader.songs") || "{}"),
+		playlists: JSON.parse(localStorage.getItem("loader.playlists") || "{}")
 	} as IShareState,
 	reducers: {
-
+		updateLoader(state, action: PayloadAction<{ code: string, loader: ILoader }>) {
+			const { code, loader } = action.payload;
+			loader.loaded = (loader?.total && loader?.offset >= loader?.total) ? true : false;
+			(state as any)[code] = loader;
+			localStorage.setItem("loader."+code, JSON.stringify(loader));
+		}
 	},
 })
 
-export const {  } = shareSlice.actions
+export const { updateLoader } = shareSlice.actions;
 export default shareSlice.reducer;
