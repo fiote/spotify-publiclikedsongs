@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../data/store";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Search, SearchProps } from "semantic-ui-react";
 
 export const SongsDestination = () => {
 	const rootState = useSelector<RootState>((state) => state) as RootState;
-	const { loginState, shareState } = rootState;
+	const { shareState } = rootState;
 
-	const [loading, setLoading] = useState(false);
 	const [results, setResults] = useState<any[]>([]);
 	const [value, setValue] = useState('');
 
@@ -67,7 +66,6 @@ export const SongsDestination = () => {
 						</h5>
 						<div className="field">
 							<Search
-							loading={loading}
 							placeholder='Search playlist...'
 							onResultSelect={handleSearchPick}
 							onSearchChange={handleSearchChange}
