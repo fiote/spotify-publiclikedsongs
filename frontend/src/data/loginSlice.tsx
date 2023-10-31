@@ -52,10 +52,9 @@ const loginSlice = createSlice({
 			localStorage.setItem("auth", JSON.stringify(action.payload));
 		},
 		unsetLogin(state) {
+			localStorage.clear();
 			state.profile = undefined;
 			state.auth = undefined;
-			localStorage.removeItem("auth");
-			localStorage.removeItem("profile");
 		}
 	},
 })
